@@ -16,7 +16,6 @@
   <!-- Custom styles for this template -->
   <link href="<?php echo get_template_directory_uri(); ?>/layouts/css/sb-admin-2.css" rel="stylesheet">
   <!-- Custom styles for this page -->
-  <link href="<?php echo get_template_directory_uri(); ?>/layouts/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   <link href="<?php echo get_template_directory_uri(); ?>/layouts/css/select2.min.css" rel="stylesheet" />
   <link href="<?php echo get_template_directory_uri(); ?>/layouts/css/select2-bootstrap4.min.css" rel="stylesheet" />
   <link href="<?php echo get_template_directory_uri(); ?>/layouts/css/styles.css" rel="stylesheet">

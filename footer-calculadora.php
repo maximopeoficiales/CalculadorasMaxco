@@ -3,17 +3,7 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<!-- <script src="<?php echo get_template_directory_uri(); ?>/layouts/vendor/jquery/jquery.min.js"></script> -->
 <script src="<?php echo get_template_directory_uri(); ?>/layouts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
-<script src="<?php echo get_template_directory_uri(); ?>/layouts/vendor/jquery-easing/jquery.easing.min.js"></script>
-<!-- Custom scripts for all pages-->
-<script src="<?php echo get_template_directory_uri(); ?>/layouts/js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<script src="<?php echo get_template_directory_uri(); ?>/layouts/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="<?php echo get_template_directory_uri(); ?>/layouts/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<!-- Page level custom scripts -->
-<script src="<?php echo get_template_directory_uri(); ?>/layouts/js/demo/datatables-demo.js"></script>
 <!-- sweet alert -->
 <script src="<?php echo get_template_directory_uri(); ?>/layouts/js/sweetalert2@9.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/layouts/js/select2.min.js"></script>
