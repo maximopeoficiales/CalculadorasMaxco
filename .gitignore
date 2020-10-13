@@ -1,13 +1,13 @@
 
-css
-fonts
-header-elements
-images
-inc
-js
-languages
-vc_templates
-woocommerce
+/css
+/fonts
+/header-elements
+/images
+/inc
+/js
+/languages
+/vc_templates
+/woocommerce
 404.php
 archive-portfolio.php
 author-bio.php
@@ -29,6 +29,7 @@ selectors.js
 sidebar-footer.php
 sidebar.php
 single-portfolio.php
+searchform.php
 single.php
 style.css
 style.min.css
