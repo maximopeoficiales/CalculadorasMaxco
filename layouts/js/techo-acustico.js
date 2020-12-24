@@ -12,27 +12,9 @@ class WoocommerceApi {
     this.dominio = "https://maxco.punkuhr.com/";
     /* datos en duro */
     this.data = [
-      {
-        sku: 454340,
-        nombre: "Plancha GYPLAC ST Extraliviana de 1/2",
-        precio_unidad: 0.71,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Planchas",
-        activado: true,
-      },
-      {
-        sku: 403036,
-        nombre: "Perfil Parante 64 X 38 X 0.45 X 3 G",
-        precio_unidad: 1.02,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Piezas",
-        activado: true,
-      },
-      {
-        sku: 402991,
-        nombre: "Perfil Riel 65 X 25 0.45 X 3 GALV",
+      { /* tabla 1 999991 falta especificar producto */
+        sku: 449055,
+        nombre: "PRINCIPAL DONN 12' 15/16",
         precio_unidad: 0.25,
         cantidad: 0,
         redondeo: 0,
@@ -40,68 +22,92 @@ class WoocommerceApi {
         activado: true,
       },
       {
-        sku: 449112,
-        nombre: "Tornillo DRYWALL 7 x 7/16 PF",
-        precio_unidad: 7.35,
+        sku: 449054,
+        nombre: "SECUNDARIO DONN 4' 15/16",
+        precio_unidad: 1.35,
         cantidad: 0,
         redondeo: 0,
-        unidad: "Millar",
+        unidad: "Piezas",
         activado: true,
       },
       {
-        sku: 449117,
-        nombre: "Tornillo LOCAL Forro de 6 x 1 PUNTA FINA",
-        precio_unidad: 22,
+        sku: 449057,
+        nombre: "PERIMETRAL DONN 3 M 15/16",
+        precio_unidad: 0.28,
         cantidad: 0,
         redondeo: 0,
-        unidad: "Millar",
+        unidad: "Piezas",
         activado: true,
       },
       {
-        sku: 408036,
-        nombre: "CINTA DE PAPEL CTK DE 250' ",
-        precio_unidad: 2.86,
+        sku: 449040,
+        nombre: "BALDOSA RADAR CLIMAPLUS 2X4X5/8 ",
+        precio_unidad: 1.35,
         cantidad: 0,
         redondeo: 0,
-        unidad: "Rollos",
+        unidad: "Piezas",
         activado: true,
       },
       {
         sku: 449109,
-        nombre: "Fulminante Marron CAL. 22",
-        precio_unidad: 1.8,
+        nombre: "FULMINANTE MARRON CAL. 22",
+        precio_unidad: 4,
         cantidad: 0,
         redondeo: 0,
         unidad: "Cientos",
         activado: true,
       },
       {
-        sku: 449107,
-        nombre: "Clavos Local 1",
-        precio_unidad: 1.8,
+        sku: 449108,
+        nombre: "CLAVO C/CLIP DE 1-1/4",
+        precio_unidad: 4,
         cantidad: 0,
         redondeo: 0,
         unidad: "Cientos",
         activado: true,
       },
+      /* tabla 2 */
       {
-        sku: 450744,
-        nombre: "MASILLA MAXROCK CAJA X 20KG",
-        precio_unidad: 2.05,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Cajas de 5 Kg",
-        activado: true,
-      },
-      {
-        sku: 403081,
-        nombre: "ANGULO ESQUINERO 30X30X0.30X3.00 GALV",
-        precio_unidad: 0,
+        sku: 449045,
+        nombre: "BALDOSA OLYMPIA CP 2X2X5/8 / P916",
+        precio_unidad: 2.7,
         cantidad: 0,
         redondeo: 0,
         unidad: "Piezas",
         activado: false,
       },
+
+      { /* 449056 secundario donn 2 15/16  */
+        sku: 449056,
+        nombre: "Secundario Donn 2 15/16 DX1I610L",
+        precio_unidad: 1.35,
+        cantidad: 0,
+        redondeo: 0,
+        unidad: "Piezas",
+        activado: false,
+      },
+      {
+        sku: 449050,
+        nombre: "BALDOSA MARS CP 2X2X3/4 P.9/16",
+        precio_unidad: 2.7,
+        cantidad: 0,
+        redondeo: 0,
+        unidad: "Piezas",
+        activado: false,
+      },
+      /* tabla 3  falta 449833 angulo perimetrial m7 12*/
+      {
+        sku: 449059,
+        nombre: "PRINCIPAL DONN 10' 9/16",
+        precio_unidad: 1.43,
+        cantidad: 0,
+        redondeo: 0,
+        unidad: "Piezas",
+        activado: false,
+      },
+
+
+
     ];
     /* ordenados por sku */
     this.data = this.getDatosOrdenadosSku(this.data);
@@ -123,8 +129,11 @@ class WoocommerceApi {
     return data;
   }
   async getDatosBase(llamados = 0) {
-    let skus = this.data.map((e) => e.sku).join(",");
-    const url = `${this.dominio}wp-json/wc/v3/products?sku=${skus}&consumer_key=${this.consumerKey}&consumer_secret=${this.consumerSecret}`;
+    let skus = this.data.map((e) => e.sku);
+    let url = `${this.dominio}wp-json/wc/v3/products?sku=${skus.join(
+      ","
+    )}&consumer_key=${this.consumerKey}&consumer_secret=${this.consumerSecret
+      }&per_page=100`;
     try {
       let materiales = await (await fetch(url)).json();
       return materiales;
@@ -480,8 +489,7 @@ class UI {
         }
     });
     /* resetear materiales */
-    document
-      .querySelector("#resetear_materiales")
+    getElement("#resetear_materiales")
       .addEventListener("click", (e) => {
         e.preventDefault();
         this.mostrarConfirmacionCustom(
@@ -495,8 +503,7 @@ class UI {
         );
       });
     //agregar al carrito
-    document
-      .querySelector("#agregar_carrito")
+    getElement("#agregar_carrito")
       .addEventListener("click", (e) => {
         e.preventDefault();
         if (woo.getMontoTotal() != 0) {
@@ -552,118 +559,8 @@ class UI {
           this.mostrarMensajeCustom("info", "Ops ...", "Precio total en cero");
         }
       });
-    /* agregar opcionales */
-    document
-      .querySelector("#agregar_opcionales")
-      .addEventListener("click", (e) => {
-        e.preventDefault();
-        let n_esquina = getElement("#n_esquinas");
-        let vano_puerta_1 = getElement("#vano_puerta_1");
-        let vano_puerta_17 = getElement("#vano_puerta_17");
-        const limpiarOpcionales = () => {
-          n_esquina.value = "";
-          vano_puerta_1.value = "";
-          vano_puerta_17.value = "";
-        };
-        const agregarOpcionales = () => {
-          //3234 Perfil Parante
-          //3236 Angulo Esquinero
-          //3248 Perfil Riel
-          this.mostrarSpinner();
-          if (n_esquina.value !== "" && parseInt(n_esquina.value) !== 0) {
-            /* busco al angulo esquinero */
-            let anguloesquinero = woo.materiales.find(
-              (m) => m.id == 3236 //3236  es su id
-            );
-            //si se activa por primera vez
-            if (!anguloesquinero.activado) {
-              woo.materiales.splice(2, 1); //lo elimino del array su indice es 2
-              //si ya lo agregue ignoralo
-              anguloesquinero.activado = true;
-              anguloesquinero.cantidad = parseInt(n_esquina.value);
-              anguloesquinero.redondeo = parseInt(n_esquina.value);
-              woo.materiales.push(anguloesquinero); //lo agrego para que aparezca al final
-            }
-          }
-          if (
-            vano_puerta_1.value !== "" &&
-            parseInt(vano_puerta_1.value) !== 0
-          ) {
-            //modificar a sus respectivos del carrito
-            woo.materiales.forEach((m) => {
-              if (m.activado) {
-                if (m.id === 3236) {
-                  m.cantidad = parseFloat(m.cantidad) + 4;
-                  m.redondeo = Math.ceil(m.cantidad);
-                }
-                if (m.id == 3234) {
-                  m.cantidad = parseFloat(m.cantidad) + 2;
-                  m.redondeo = Math.ceil(m.cantidad);
-                }
-                if (m.id == 3248) {
-                  m.cantidad = parseFloat(m.cantidad) + 1;
-                  m.redondeo = Math.ceil(m.cantidad);
-                }
-              }
-            });
-          }
-          if (
-            vano_puerta_17.value !== "" &&
-            parseInt(vano_puerta_17.value) !== 0
-          ) {
-            //modificar a sus respectivos del carrito
-            woo.materiales.forEach((ma) => {
-              if (ma.activado) {
-                if (ma.id === 3236) {
-                  ma.cantidad = parseFloat(ma.cantidad) + 5;
-                  ma.redondeo = Math.ceil(ma.cantidad);
-                }
-                if (ma.id == 3234) {
-                  ma.cantidad = parseFloat(ma.cantidad) + 2;
-                  ma.redondeo = Math.ceil(ma.cantidad);
-                }
-                if (ma.id == 3248) {
-                  ma.cantidad = parseFloat(ma.cantidad) + 1;
-                  ma.redondeo = Math.ceil(ma.cantidad);
-                }
-              }
-            });
-          }
 
-          this.llenarTabla(woo.materiales); //lleno la tabla
-          this.mostrarCantidadTotal();
-          this.mostrarPrecioTotal();
-          limpiarOpcionales();
-          setTimeout(() => {
-            this.ocultarSpinner();
-          }, 1500);
-        };
-        if (
-          n_esquina.value == "" &&
-          vano_puerta_1.value == "" &&
-          vano_puerta_17.value == ""
-        ) {
-          this.mostrarMensajeCustom(
-            "info",
-            "Ops...",
-            "Complete almenos un campo continuar"
-          );
-        } else if (
-          n_esquina.value !== "" ||
-          vano_puerta_1.value !== "" ||
-          vano_puerta_17.value !== ""
-        ) {
-          this.mostrarConfirmacionCustom(
-            "Advertencia",
-            "¿Seguro de agregar estos materiales opcionales?,se actualizaran los materiales",
-            "warning",
-            "Agregar",
-            agregarOpcionales
-          );
-        }
-      });
-    document
-      .querySelector("#agregar_material")
+    getElement("#agregar_material")
       .addEventListener("click", (e) => {
         e.preventDefault();
         let html = `
@@ -696,7 +593,8 @@ class UI {
                           <option value="Cajas de 5 kg">Cajas de 5 kg</option>
                           <option value="Cajas de 20 kg">Cajas de 20 kg</option>
                           <option value="Cajas de 27 kg">Cajas de 27 kg</option>
-                          <option value="Millar Bolsas">Millar Bolsas</option>
+                          <option value="Millar">Millar </option>
+                          <option value="Bolsas">Bolsas</option>
                         </select>
                     </div>
               </div>
@@ -786,19 +684,58 @@ class UI {
           getElement(".swal2-actions").classList.remove("d-none");
         })();
       });
+    getElement("#checkbox-esModelado").addEventListener("change", e => {
+      if (e.target.checked) {
+        // desabilita a 449040 
+        woo.materiales = woo.materiales.filter((m) => {
+          if (m.sku == 449040) {
+            m.activado = false;
+          }
+          return m;
+        });
+        this.llenarTabla(woo.materiales);
+      }
+      else {
+        // habilita a 449040
+        woo.materiales = woo.materiales.filter((m) => {
+          if (m.sku == 449040) {
+            m.activado = true;
+          }
+          return m;
+        });
+        this.llenarTabla(woo.materiales);
+      }
+    });
+    getElement("#checkbox-tieneMedidas").addEventListener("change", e => {
+      if (e.target.checked) {
+        // desabilita a 449055 - 449056 
+        woo.materiales = woo.materiales.filter((m) => {
+          if (m.sku == 449055 || m.sku == 449056) {
+            m.activado = false;
+          } else if (m.sku == 449050) {
+            // habilita 449050
+            m.activado = true;
+          }
+          return m;
+        });
+        this.llenarTabla(woo.materiales);
+      }
+      else {
+        // habilita a 449055 - 449056 
+        woo.materiales = woo.materiales.filter((m) => {
+          if (m.sku == 449055 || m.sku == 449056) {
+            m.activado = true;
+          } else if (m.sku == 449050) {
+            // desabilita 449050
+            m.activado = false;
+          }
+          return m;
+        });
+        this.llenarTabla(woo.materiales);
+      }
+    });
 
-    /* eventos change para que no se pasen del limite */
-    getElement("#n_esquinas").addEventListener("change", (e) => {
-      e.target.value = parseInt(e.target.value);
-    });
-    getElement("#vano_puerta_1").addEventListener("change", (e) => {
-      if (parseFloat(e.target.value) > 1) e.target.value = "0";
-    });
-    document
-      .querySelector("#vano_puerta_17")
-      .addEventListener("change", (e) => {
-        if (parseFloat(e.target.value) > 1.7) e.target.value = "0";
-      });
+
   }
   eventoCalcular() {
     let metraje = this.getMetrajeInput();
@@ -839,6 +776,7 @@ class UI {
   getMetrajeInput() {
     return parseInt(getElement("#metraje").value) || 0;
   }
+
 }
 /* instancias generales */
 const woo = new WoocommerceApi();

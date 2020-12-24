@@ -566,22 +566,18 @@ class UI {
           vano_puerta_17.value = "";
         };
         const agregarOpcionales = () => {
-          //403036 Perfil Parante
-          //403081 Angulo Esquinero
-          //402991 Perfil Riel
+          //3234 Perfil Parante
+          //3236 Angulo Esquinero
+          //3248 Perfil Riel
           this.mostrarSpinner();
           if (n_esquina.value !== "" && parseInt(n_esquina.value) !== 0) {
             /* busco al angulo esquinero */
-            let index;
-            let anguloesquinero = woo.materiales.find((m, i) => {
-              if (m.sku == 403081) {
-                index = i;
-                return m;
-              }
-            });
+            let anguloesquinero = woo.materiales.find(
+              (m) => m.id == 3236 //3236  es su id
+            );
             //si se activa por primera vez
             if (!anguloesquinero.activado) {
-              woo.materiales.splice(index, 1); //lo elimino del array su indice es 2
+              woo.materiales.splice(2, 1); //lo elimino del array su indice es 2
               //si ya lo agregue ignoralo
               anguloesquinero.activado = true;
               anguloesquinero.cantidad = parseInt(n_esquina.value);
@@ -596,15 +592,15 @@ class UI {
             //modificar a sus respectivos del carrito
             woo.materiales.forEach((m) => {
               if (m.activado) {
-                if (m.sku == 403081) {
+                if (m.id === 3236) {
                   m.cantidad = parseFloat(m.cantidad) + 4;
                   m.redondeo = Math.ceil(m.cantidad);
                 }
-                if (m.sku == 403036) {
+                if (m.id == 3234) {
                   m.cantidad = parseFloat(m.cantidad) + 2;
                   m.redondeo = Math.ceil(m.cantidad);
                 }
-                if (m.sku == 402991) {
+                if (m.id == 3248) {
                   m.cantidad = parseFloat(m.cantidad) + 1;
                   m.redondeo = Math.ceil(m.cantidad);
                 }
@@ -618,15 +614,15 @@ class UI {
             //modificar a sus respectivos del carrito
             woo.materiales.forEach((ma) => {
               if (ma.activado) {
-                if (ma.sku == 403081) {
+                if (ma.id === 3236) {
                   ma.cantidad = parseFloat(ma.cantidad) + 5;
                   ma.redondeo = Math.ceil(ma.cantidad);
                 }
-                if (ma.sku == 403036) {
+                if (ma.id == 3234) {
                   ma.cantidad = parseFloat(ma.cantidad) + 2;
                   ma.redondeo = Math.ceil(ma.cantidad);
                 }
-                if (ma.sku == 402991) {
+                if (ma.id == 3248) {
                   ma.cantidad = parseFloat(ma.cantidad) + 1;
                   ma.redondeo = Math.ceil(ma.cantidad);
                 }
