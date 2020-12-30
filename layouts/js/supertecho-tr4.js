@@ -4,153 +4,214 @@
  * @returns {HTMLElement}
  */
 const getElement = (selector) => document.querySelector(selector);
+// data variable  segun cada separacion viguetas 
+//
 
+let dataPanel = [
+  {
+    name: "p183",
+    cantA: 0,
+    cantB: 0,
+    cantTotal: 0,
+    areaPanel: 0,
+    aPpAc: 0,
+    values: [1.5, 1, 1.25, 1.5, 0, 0]
+  },
+  {
+    name: "p305",
+    cantA: 0,
+    cantB: 0,
+    cantTotal: 0,
+    areaPanel: 0,
+    aPpAc: 0,
+    values: [2.25, 2, 2.5, 1.5, 1.75, 2]
+  },
+  {
+    name: "p366",
+    cantA: 0,
+    cantB: 0,
+    cantTotal: 0,
+    areaPanel: 0,
+    aPpAc: 0,
+    values: [3, 3, 2.5, 3, 3.5, 2]
+  },
+  {
+    name: "p515",
+    cantA: 0,
+    cantB: 0,
+    cantTotal: 0,
+    areaPanel: 0,
+    aPpAc: 0,
+    values: [4.5, 5, 5, 4.5, 3.5, 4]
+  },
+  {
+    name: "p600",
+    cantA: 0,
+    cantB: 0,
+    cantTotal: 0,
+    areaPanel: 0,
+    aPpAc: 0,
+    values: [5.25, 5, 5, 4.5, 5.25, 4]
+  },
+];
+class Observer {
+  subscribers = [];
+  subscribe(callback) {
+    this.subscribers.push(callback);
+  }
+  notify() {
+    this.subscribers.forEach((subcriptor) => {
+      subcriptor();
+    });
+  }
+}
 class WoocommerceApi {
   constructor() {
     this.consumerKey = "ck_0157c4f5fbc72b4a71161b929dea276a81006fd9";
     this.consumerSecret = "cs_b575ce513cbaf2478ca0d06c2d0dd64699ec642d";
     this.dominio = "https://maxco.punkuhr.com/";
     /* datos en duro */
-    this.data = [
-      {
-        sku: 449071,
-        nombre: "Planchas de 1,22m x 2,44m (4' x 8') DUROCK",
-        precio_unidad: 0.35,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Planchas",
-        activado: true,
-      },
-      {
-        sku: 403047,
-        nombre: "PERFIL PARANTE 89 X 38 X 0.9 X 3 GALV",
-        precio_unidad: 1.02,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Piezas",
-        activado: true,
-      },
-      {
-        sku: 448790,
-        nombre: "PERFIL RIEL 90 X 40 X 0.90 X 3 GALV",
-        precio_unidad: 0.25,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Piezas",
-        activado: true,
-      },
-      {
-        sku: 449111,
-        nombre: "TORNILLO 7x7/16 PB",
-        precio_unidad: 7.35,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Millar",
-        activado: true,
-      },
-      {
-        sku: 449121,
-        nombre: "TORNILLO DUROCK 1 1/4",
-        precio_unidad: 11,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Millar",
-        activado: true,
-      },
-      {
-        sku: 449113,
-        nombre: "TORNILLO LOCAL 6X1 P. BROCA",
-        precio_unidad: 11,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Millar",
-        activado: true,
-      },
-      {
-        sku: 449123,
-        nombre: "TYVEK STUCCO WRAP DE 5 X 200",
-        precio_unidad: 0.011,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Rollos",
-        activado: true,
-      },
-      {
-        sku: 449069,
-        nombre: "CINTA DUROCK USG 4",
-        precio_unidad: 1.43,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Rollos",
-        activado: true,
-      },
-      {
-        sku: 408036,
-        nombre: "CINTA DE PAPEL CTK DE 250",
-        precio_unidad: 1.43,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Rollos",
-        activado: true,
-      },
+    this.data = {
+      accesorios: [
+        {
+          sku: 449071,
+          nombre: "CANALETA ALZN 0.30x3.00M",
+          cantidad: 0,
+          unidad: "Piezas",
+          detalle: "3m",
+          activado: true,
+        },
+        {
+          sku: 403047,
+          nombre: "SUJETADOR GALV X 0.90 mm X 005/200",
+          cantidad: 0,
+          unidad: "Unidad",
+          detalle: "",
+          activado: true,
+        },
+        {
+          sku: 448790,
+          nombre: "SOPORTE CANALETA 2A GALV2B0.90MMX005/200",
+          cantidad: 0,
+          unidad: "Piezas",
+          detalle: "3m",
+          activado: true,
+        }, {
+          sku: 403047,
+          nombre: "SOPORTE CANALETA 2B GALV2B0.90MMX005/200",
+          cantidad: 0,
+          unidad: "Piezas",
+          detalle: "3m",
+          activado: true,
+        }, {
+          sku: 403047,
+          nombre: "SOPORTE CANALETA 2C GALV2C0.90MMX005/200",
+          cantidad: 0,
+          unidad: "Piezas",
+          detalle: "3m",
+          activado: true,
+        }, {
+          sku: 403047,
+          nombre: "SOPORTE CANALETA 2D GALV2B0.90MMX005/200",
+          cantidad: 0,
+          unidad: "Piezas",
+          detalle: "3m",
+          activado: true,
+        },
+        {
+          sku: 403047,
+          nombre: "SOPORTE CANALETA 2E GALV2B0.90MMX005/200",
+          cantidad: 0,
+          unidad: "Piezas",
+          detalle: "3m",
+          activado: true,
+        },
+        {
+          sku: 403047,
+          nombre: "CUMBRERA ALZN 0.30x3.00M",
+          cantidad: 0,
+          unidad: "Piezas",
+          detalle: "3m",
+          activado: true,
+        },
+        {
+          sku: 403047,
+          nombre: "CENEFA ALZN 0.30x3.00M",
+          cantidad: 0,
+          unidad: "Piezas",
+          detalle: "3m",
+          activado: true,
+        },
+      ],
+      generales: [
+        {
+          sku: 449071,
+          nombre: "TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT",
+          cantidad: 0,
+          unidad: "Cto",
+          detalle: "",
+          activado: true,
+        }, {
+          sku: 449071,
+          nombre: "TORNILLO # 10x3/4 Recubrimiento Ruspert",
+          cantidad: 0,
+          unidad: "Cto",
+          detalle: "",
+          activado: true,
+        },
+        {
+          sku: 449071,
+          nombre: "TORNILLO TAPPER 1/4 X 3 3 / 4 RUSPERT",
+          cantidad: 0,
+          unidad: "Cto",
+          detalle: "",
+          activado: true,
+        },
+        {
+          sku: 449071,
+          nombre: "TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT",
+          cantidad: 0,
+          unidad: "Cto",
+          detalle: "",
+          activado: true,
+        },
+        {
+          sku: 449071,
+          nombre: "TORNILLO WAFER #8 X 3/4 PNTA BROCA GALVA",
+          cantidad: 0,
+          unidad: "Cto",
+          detalle: "",
+          activado: true,
+        },
+        {
+          sku: 449071,
+          nombre: "REMACHE POP 5/32 X 12",
+          cantidad: 0,
+          unidad: "Cto",
+          detalle: "",
+          activado: true,
+        },
+        {
+          sku: 449071,
+          nombre: "CINTA BUTIL 3/8",
+          cantidad: 0,
+          unidad: "Rollos",
+          detalle: "14m",
+          activado: true,
+        },
+        {
+          sku: 449071,
+          nombre: "CINTA BUTIL 7/8*",
+          cantidad: 0,
+          unidad: "Rollos",
+          detalle: "8m",
+          activado: true,
+        },
 
-      {
-        sku: 449109,
-        nombre: "FULMINANTE MARRON CAL.22",
-        precio_unidad: 1.8,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Cientos",
-        activado: true,
-      },
-      {
-        sku: 449107,
-        nombre: "CLAVOS LOCAL 1",
-        precio_unidad: 1.8,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Cientos",
-        activado: true,
-      },
-      {
-        sku: 455790,
-        nombre: "Malla de Refuerzo rollo de 38 x 150 (0,96m x 45,75m) opcional",
-        precio_unidad: 0.024,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Rollos",
-        activado: true,
-      },
-      {
-        sku: 449070,
-        nombre: "BASECOAT USG DUROCK 50LB",
-        precio_unidad: 0.14,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Bolsas",
-        activado: true,
-      },
-      {
-        sku: 450744,
-        nombre: "MASILLA MAXROCK CAJA X 20KG",
-        precio_unidad: 1.02,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Cajas de 5 kilos",
-        activado: true,
-      },
-      {
-        sku: 403081,
-        nombre: "ANGULO ESQUINERO 30X30X0.30X3.00 GALV",
-        precio_unidad: 0,
-        cantidad: 0,
-        redondeo: 0,
-        unidad: "Piezas",
-        activado: false,
-      },
-    ];
+      ]
+    };
     /* ordenados por sku */
-    this.data = this.getDatosOrdenadosSku(this.data);
+    this.data = { accesorios: this.getDatosOrdenadosSku(this.data.accesorios), generales: this.getDatosOrdenadosSku(this.data.generales) };
     /* esta variable sera usada para hacer los calculados */
     this.backup = [];
     this.materiales = [];
@@ -244,15 +305,192 @@ class WoocommerceApi {
 /* Interfaz grafica*/
 class UI {
   constructor() {
+    this.cargarEventListener();
+    this.cargarLogica();
+  }
+  /**
+ * Represents a getValueInput.
+ * @param {string} element - The selector html.
+ * @returns {string}
+ */
+  getValueInput(element) {
+    return getElement(element).value;
+  }
+  cargarEventListener() {
+    getElement("#cubierta_agua").addEventListener("change", (e) => {
+      inputCubiertaAgua.notify();
+
+      if (e.target.value != 1) {
+        getElement("#caida2B").removeAttribute("disabled");
+      } else {
+        getElement("#caida2B").setAttribute("disabled", true);
+      }
+    })
+    getElement("#caida1A").addEventListener("change", () => {
+      inputCaida1A.notify();
+    })
+    getElement("#caida2B").addEventListener("change", () => {
+      inputCaida2B.notify();
+    })
+    getElement("#cubiertaL").addEventListener("change", () => {
+      inputCaidaL.notify();
+    })
+    getElement("#separacionViguetas").addEventListener("change", () => {
+      inputSeparacionViguetas.notify();
+    })
+    getElement("#panel").addEventListener("change", () => {
+      this.calcularOpcionesPanel();
+    })
+  }
+  cargarLogica() {
+    inputCubiertaAgua.subscribe(() => {
+      this.calcularAreaCubierta(true);
+      this.calcularOpcionesPanel();
+    });
+    inputCaida1A.subscribe(() => {
+      this.calcularAreaCubierta(true);
+      this.calcularOpcionesPanel();
+    });
+    inputCaida2B.subscribe(() => {
+      this.calcularAreaCubierta(true);
+      this.calcularOpcionesPanel();
+    });
+    inputCaidaL.subscribe(() => {
+      this.calcularAreaCubierta(true);
+      this.calcularOpcionesPanel();
+    });
+    inputSeparacionViguetas.subscribe(() => {
+      this.calcularAreaCubierta(true);
+      this.calcularOpcionesPanel();
+    });
+
+  }
+  calcularAreaCubierta(applyInput = false) {
+    let areaCubierta = 0;
+    if (this.getValueInput("#cubierta_agua") == 1) {
+      areaCubierta = parseFloat(this.getValueInput("#caida1A")) * parseFloat
+        (this.getValueInput("#cubiertaL"));
+    } else {
+      areaCubierta = parseFloat(this.getValueInput("#cubiertaL")) * (parseFloat(this.getValueInput("#caida1A")) + parseFloat(this.getValueInput("#caida2B")));
+    }
+    if (applyInput) {
+      getElement("#areaCubierta").value = areaCubierta.toFixed(2);
+    } else {
+      return areaCubierta;
+    }
+  }
+  calcularOpcionesPanel() {
+
+    let cubiertaAgua = this.getValueInput("#cubierta_agua");
+    let caida1A = this.getValueInput("#caida1A");
+    let caida2B = this.getValueInput("#caida2B");
+    let cubiertaL = this.getValueInput("#cubiertaL");
+    let separacionViquetas = this.getValueInput("#separacionViguetas");
+    let areaCubierta = this.calcularAreaCubierta();
+
+    dataPanel = dataPanel.filter(panel => {
+
+      if (separacionViquetas == 0.75) {
+        panel.cantA = Math.ceil(parseFloat
+          (caida1A / panel.values[0]));
+      } else if (separacionViquetas == 1) {
+        panel.cantA = Math.ceil(parseFloat
+          (caida1A / panel.values[1]));
+      } else if (separacionViquetas == 1.25) {
+        panel.cantA = Math.ceil(parseFloat
+          (caida1A / panel.values[2]));
+      }
+      else if (separacionViquetas == 1.5) {
+        panel.cantA = Math.ceil(parseFloat
+          (caida1A / panel.values[3]));
+      } else if (separacionViquetas == 1.75) {
+        panel.cantA = Math.ceil(parseFloat
+          (caida1A / panel.values[4])) == Infinity ? 0 : Math.ceil(parseFloat
+            (caida1A / panel.values[4]));
+      } else if (separacionViquetas == 2) {
+        panel.cantA = Math.ceil(parseFloat
+          (caida1A / panel.values[5])) == Infinity ? 0 : Math.ceil(parseFloat
+            (caida1A / panel.values[5]));
+      }
+
+      if (cubiertaAgua == 2) {
+        if (separacionViquetas == 0.75) {
+          panel.cantB = Math.ceil(parseFloat
+            (caida2B / panel.values[0]));
+        } else if (separacionViquetas == 1) {
+          panel.cantB = Math.ceil(parseFloat
+            (caida2B / panel.values[1]));
+        } else if (separacionViquetas == 1.25) {
+          panel.cantB = Math.ceil(parseFloat
+            (caida2B / panel.values[2]));
+        }
+        else if (separacionViquetas == 1.5) {
+          panel.cantB = Math.ceil(parseFloat
+            (caida2B / panel.values[3]));
+        } else if (separacionViquetas == 1.75) {
+          panel.cantB = Math.ceil(parseFloat
+            (caida2B / panel.values[4])) == Infinity ? 0 : Math.ceil(parseFloat
+              (caida2B / panel.values[4]));
+        } else if (separacionViquetas == 2) {
+          panel.cantB = Math.ceil(parseFloat
+            (caida2B / panel.values[5])) == Infinity ? 0 : Math.ceil(parseFloat
+              (caida2B / panel.values[5]));
+        }
+      } else {
+        panel.cantB = 0;
+      }
+      panel.cantTotal = Math.ceil(cubiertaL / 1.05) * (panel.cantA + panel.cantB)
+      switch (panel.name) {
+        case "p183":
+          panel.areaPanel = (panel.cantTotal * 1.05 * 1.83).toFixed(2);
+          break;
+        case "p305":
+          panel.areaPanel = (panel.cantTotal * 1.05 * 3.05).toFixed(2);;
+          break;
+        case "p366":
+          panel.areaPanel = (panel.cantTotal * 1.05 * 3.66).toFixed(2);;
+          break;
+        case "p515":
+          panel.areaPanel = (panel.cantTotal * 1.05 * 5.15).toFixed(2);;
+          break;
+        case "p600":
+          panel.areaPanel = (panel.cantTotal * 1.05 * 6).toFixed(2);;
+          break;
+      }
+      panel.aPpAc = Math.round((parseFloat(panel.areaPanel) / areaCubierta) * 100);
+      return panel;
+    });
+
+    this.getDataPanelSelected();
+    console.log(dataPanel);
+  }
+  getDataPanelSelected() {
+    function getPanelByName(namePanel) {
+      return dataPanel.filter(e => e.name == namePanel)[0];
+    }
+    let currentPanel = getPanelByName(this.getValueInput("#panel"));
+    getElement("#cantidadPanel").value = currentPanel.cantTotal;
+    getElement("#pporcentaje").value = `${currentPanel.aPpAc}%`;
+
   }
 }
+
+/* Observadores */
+const inputCubiertaAgua = new Observer();
+const inputCaida1A = new Observer();
+const inputCaida2B = new Observer();
+const inputCaidaL = new Observer();
+const inputSeparacionViguetas = new Observer();
 /* instancias generales */
+
 const woo = new WoocommerceApi();
 const ui = new UI();
+
 
 async function init() {
   try {
     // woo.materiales = await woo.getDatosBaseFormateados(); //guardo los datos en una propiedad
+
   } catch (error) {
   }
 }

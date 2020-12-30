@@ -94,7 +94,7 @@ get_header("calculadora");
                                              </button>
                                         </div>
                                         <div class="modal-body">
-                                             <div class="row">
+                                             <div class="row text-center">
                                                   <div class="col-md-6">
                                                        <div class="text-center mb-3">Cubierta de 2 Aguas</div>
                                                        <img src="<?php echo get_template_directory_uri(); ?>/layouts/img/cubiertas/2.jpg" alt="" class="img-fluid">
@@ -131,8 +131,8 @@ get_header("calculadora");
                     </div>
                     <div class="col-md-4">
                          <div class="form-group">
-                              <label for="separacionVinetas">Elija su Separacion entre viñetas:</label>
-                              <select class="form-control" id="separacionVinetas">
+                              <label for="separacionVinetas">Elija su Separacion entre viguetas:</label>
+                              <select class="form-control" id="separacionViguetas">
                                    <option value="0.75" selected>0.75</option>
                                    <option value="1">1</option>
                                    <option value="1.25">1.25</option>
@@ -145,7 +145,7 @@ get_header("calculadora");
                     <div class="col-md-4">
                          <div class="form-group">
                               <label for="areaCubierta">Area Cubierta</label>
-                              <input type="number" value="250" id="areaCubierta" class="form-control" placeholder="Ingrese Area Cubierta (m)" aria-describedby="areaCubierta">
+                              <input type="number" value="0" id="areaCubierta" class="form-control" disabled placeholder="Ingrese Area Cubierta (m)" aria-describedby="areaCubierta">
                          </div>
                     </div>
                </div>
@@ -170,13 +170,13 @@ get_header("calculadora");
                     <div class="col-md-4">
                          <div class="form-group">
                               <label for="cantidadPanel">Cantidad Total</label>
-                              <input type="number" value="50" id="cantidadPanel" disabled class="form-control" aria-describedby="cantidadPanel">
+                              <input type="number" value="0" id="cantidadPanel" disabled class="form-control" aria-describedby="cantidadPanel">
                          </div>
                     </div>
                     <div class="col-md-4">
                          <div class="form-group">
-                              <label for="pporcertaje">% A Pp/AC</label>
-                              <input type="number" value="156" id="pporcertaje" disabled class="form-control" aria-describedby="pporcertaje">
+                              <label for="pporcentaje">% A Pp/AC</label>
+                              <input type="text" value="0" id="pporcentaje" disabled class="form-control" aria-describedby="pporcentaje">
                          </div>
                     </div>
 
@@ -227,7 +227,6 @@ get_header("calculadora");
                                    <th>Detalle</th>
                                    <th>Unidad</th>
                                    <th>Cantidad</th>
-                                   <th>Accion</th>
                               </tr>
                          </thead>
                          <tbody>
@@ -251,7 +250,6 @@ get_header("calculadora");
                                    <th>Detalle</th>
                                    <th>Unidad</th>
                                    <th>Cantidad</th>
-                                   <th>Accion</th>
                               </tr>
                          </thead>
                          <tbody>
