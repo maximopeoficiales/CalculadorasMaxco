@@ -71,147 +71,146 @@ class WoocommerceApi {
     this.consumerSecret = "cs_b575ce513cbaf2478ca0d06c2d0dd64699ec642d";
     this.dominio = "https://maxco.punkuhr.com/";
     /* datos en duro */
-    this.data = {
-      accesorios: [
-        {
-          sku: 449071,
-          nombre: "CANALETA ALZN 0.30x3.00M",
-          cantidad: 0,
-          unidad: "Piezas",
-          detalle: "3m",
-          activado: true,
-        },
-        {
-          sku: 403047,
-          nombre: "SUJETADOR GALV X 0.90 mm X 005/200",
-          cantidad: 0,
-          unidad: "Unidad",
-          detalle: "",
-          activado: true,
-        },
-        {
-          sku: 448790,
-          nombre: "SOPORTE CANALETA 2A GALV2B0.90MMX005/200",
-          cantidad: 0,
-          unidad: "Piezas",
-          detalle: "3m",
-          activado: true,
-        }, {
-          sku: 403047,
-          nombre: "SOPORTE CANALETA 2B GALV2B0.90MMX005/200",
-          cantidad: 0,
-          unidad: "Piezas",
-          detalle: "3m",
-          activado: true,
-        }, {
-          sku: 403047,
-          nombre: "SOPORTE CANALETA 2C GALV2C0.90MMX005/200",
-          cantidad: 0,
-          unidad: "Piezas",
-          detalle: "3m",
-          activado: true,
-        }, {
-          sku: 403047,
-          nombre: "SOPORTE CANALETA 2D GALV2B0.90MMX005/200",
-          cantidad: 0,
-          unidad: "Piezas",
-          detalle: "3m",
-          activado: true,
-        },
-        {
-          sku: 403047,
-          nombre: "SOPORTE CANALETA 2E GALV2B0.90MMX005/200",
-          cantidad: 0,
-          unidad: "Piezas",
-          detalle: "3m",
-          activado: true,
-        },
-        {
-          sku: 403047,
-          nombre: "CUMBRERA ALZN 0.30x3.00M",
-          cantidad: 0,
-          unidad: "Piezas",
-          detalle: "3m",
-          activado: true,
-        },
-        {
-          sku: 403047,
-          nombre: "CENEFA ALZN 0.30x3.00M",
-          cantidad: 0,
-          unidad: "Piezas",
-          detalle: "3m",
-          activado: true,
-        },
-      ],
-      generales: [
-        {
-          sku: 449071,
-          nombre: "TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT",
-          cantidad: 0,
-          unidad: "Cto",
-          detalle: "",
-          activado: true,
-        }, {
-          sku: 449071,
-          nombre: "TORNILLO # 10x3/4 Recubrimiento Ruspert",
-          cantidad: 0,
-          unidad: "Cto",
-          detalle: "",
-          activado: true,
-        },
-        {
-          sku: 449071,
-          nombre: "TORNILLO TAPPER 1/4 X 3 3 / 4 RUSPERT",
-          cantidad: 0,
-          unidad: "Cto",
-          detalle: "",
-          activado: true,
-        },
-        {
-          sku: 449071,
-          nombre: "TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT",
-          cantidad: 0,
-          unidad: "Cto",
-          detalle: "",
-          activado: true,
-        },
-        {
-          sku: 449071,
-          nombre: "TORNILLO WAFER #8 X 3/4 PNTA BROCA GALVA",
-          cantidad: 0,
-          unidad: "Cto",
-          detalle: "",
-          activado: true,
-        },
-        {
-          sku: 449071,
-          nombre: "REMACHE POP 5/32 X 12",
-          cantidad: 0,
-          unidad: "Cto",
-          detalle: "",
-          activado: true,
-        },
-        {
-          sku: 449071,
-          nombre: "CINTA BUTIL 3/8",
-          cantidad: 0,
-          unidad: "Rollos",
-          detalle: "14m",
-          activado: true,
-        },
-        {
-          sku: 449071,
-          nombre: "CINTA BUTIL 7/8*",
-          cantidad: 0,
-          unidad: "Rollos",
-          detalle: "8m",
-          activado: true,
-        },
+    this.data = [
+      /* accesorios */
+      {
+        sku: 452804,
+        nombre: "CANALETA ALZN 0.30x3.00M",
+        cantidad: 0,
+        unidad: "Piezas",
+        detalle: "3m",
+        accesorio: true,
+        activado: false,
+      },
+      /* {
+        sku: 403047,
+        nombre: "SUJETADOR GALV X 0.90 mm X 005/200",
+        cantidad: 0,
+        unidad: "Unidad",
+        detalle: "", accesorio: true,
+        activado: false,
+      },
+      {
+        sku: 448790,
+        nombre: "SOPORTE CANALETA 2A GALV2B0.90MMX005/200",
+        cantidad: 0,
+        unidad: "Piezas",
+        detalle: "3m", accesorio: true,
+        activado: false,
+      }, {
+        sku: 403047,
+        nombre: "SOPORTE CANALETA 2B GALV2B0.90MMX005/200",
+        cantidad: 0,
+        unidad: "Piezas",
+        detalle: "3m", accesorio: true,
+        activado: false,
+      }, {
+        sku: 403047,
+        nombre: "SOPORTE CANALETA 2C GALV2C0.90MMX005/200",
+        cantidad: 0,
+        unidad: "Piezas",
+        detalle: "3m", accesorio: true,
+        activado: false,
+      }, {
+        sku: 403047,
+        nombre: "SOPORTE CANALETA 2D GALV2B0.90MMX005/200",
+        cantidad: 0,
+        unidad: "Piezas",
+        detalle: "3m", accesorio: true,
+        activado: false,
+      },
+      {
+        sku: 403047,
+        nombre: "SOPORTE CANALETA 2E GALV2B0.90MMX005/200",
+        cantidad: 0,
+        unidad: "Piezas",
+        detalle: "3m", accesorio: true,
+        activado: false,
+      },
+      {
+        sku: 403047,
+        nombre: "CUMBRERA ALZN 0.30x3.00M",
+        cantidad: 0,
+        unidad: "Piezas",
+        detalle: "3m", accesorio: true,
+        activado: false,
+      }, */
+      {
+        sku: 452807,
+        nombre: "CENEFA ALZN 0.30x3.00M",
+        cantidad: 0,
+        unidad: "Piezas",
+        detalle: "3m", accesorio: true,
+        activado: false,
+      },
 
-      ]
-    };
+      /* materiales generales */
+      // {
+      //   sku: 449071,
+      //   nombre: "TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT",
+      //   cantidad: 0,
+      //   unidad: "Cto",
+      //   detalle: "", accesorio: false,
+      //   activado: true,
+      // }, {
+      //   sku: 449071,
+      //   nombre: "TORNILLO # 10x3/4 Recubrimiento Ruspert",
+      //   cantidad: 0,
+      //   unidad: "Cto",
+      //   detalle: "", accesorio: false,
+      //   activado: true,
+      // },
+      // {
+      //   sku: 449071,
+      //   nombre: "TORNILLO TAPPER 1/4 X 3 3 / 4 RUSPERT",
+      //   cantidad: 0,
+      //   unidad: "Cto",
+      //   detalle: "", accesorio: false,
+      //   activado: true,
+      // },
+      // {
+      //   sku: 449071,
+      //   nombre: "TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT",
+      //   cantidad: 0,
+      //   unidad: "Cto",
+      //   detalle: "", accesorio: false,
+      //   activado: true,
+      // },
+      // {
+      //   sku: 449071,
+      //   nombre: "TORNILLO WAFER #8 X 3/4 PNTA BROCA GALVA",
+      //   cantidad: 0,
+      //   unidad: "Cto",
+      //   detalle: "", accesorio: false,
+      //   activado: true,
+      // },
+      {
+        sku: 456081,
+        nombre: "REMACHE POP 5/32 X 12",
+        cantidad: 0,
+        unidad: "Cto",
+        detalle: "", accesorio: false,
+        activado: true,
+      },
+      {
+        sku: 453878,
+        nombre: "CINTA BUTIL 3/8",
+        cantidad: 0,
+        unidad: "Rollos",
+        detalle: "14m", accesorio: false,
+        activado: true,
+      },
+      {
+        sku: 453877,
+        nombre: "CINTA BUTIL 7/8*",
+        cantidad: 0,
+        unidad: "Rollos",
+        detalle: "8m", accesorio: false,
+        activado: true,
+      },
+    ];
     /* ordenados por sku */
-    this.data = { accesorios: this.getDatosOrdenadosSku(this.data.accesorios), generales: this.getDatosOrdenadosSku(this.data.generales) };
+    this.data = this.getDatosOrdenadosSku(this.data);
     /* esta variable sera usada para hacer los calculados */
     this.backup = [];
     this.materiales = [];
@@ -288,10 +287,10 @@ class WoocommerceApi {
       //agrego las nuevas propiedades necesarios para la tabla
       let newmateriales = materiales.map(function (material, index) {
         if (material.sku == data[index].sku) {
-          material.precio_metro2 = data[index].precio_unidad;
           material.cantidad = data[index].cantidad;
-          material.redondeo = data[index].redondeo;
           material.unidad = data[index].unidad;
+          material.detalle = data[index].detalle;
+          material.accesorio = data[index].accesorio;
           material.activado = data[index].activado;
           return material;
         }
@@ -305,7 +304,8 @@ class WoocommerceApi {
 /* Interfaz grafica*/
 class UI {
   constructor() {
-    this.cargarEventListener();
+    this.getFechaHoy("#fecha_actual");
+    this.cargarEventListeners();
     this.cargarLogica();
   }
   /**
@@ -316,7 +316,7 @@ class UI {
   getValueInput(element) {
     return getElement(element).value;
   }
-  cargarEventListener() {
+  cargarEventListeners() {
     getElement("#cubierta_agua").addEventListener("change", (e) => {
       inputCubiertaAgua.notify();
 
@@ -341,6 +341,24 @@ class UI {
     getElement("#panel").addEventListener("change", () => {
       this.calcularOpcionesPanel();
     })
+    getElement("#checkAccesorios").addEventListener("change", (e) => {
+      if (e.target.checked) {
+        getElement("#cardtable2").classList.remove("d-none");
+        woo.materiales.forEach(e => {
+          if (e.accesorio == true) {
+            e.activado = true;
+          }
+        });
+      } else {
+        getElement("#cardtable2").classList.add("d-none");
+        woo.materiales.forEach(e => {
+          if (e.accesorio == true) {
+            e.activado = false;
+          }
+        })
+      }
+      checkboxMostrarAccesorios.notify();
+    })
   }
   cargarLogica() {
     inputCubiertaAgua.subscribe(() => {
@@ -362,6 +380,9 @@ class UI {
     inputSeparacionViguetas.subscribe(() => {
       this.calcularAreaCubierta(true);
       this.calcularOpcionesPanel();
+    });
+    checkboxMostrarAccesorios.subscribe(() => {
+      this.llenarTablas();
     });
 
   }
@@ -473,6 +494,66 @@ class UI {
     getElement("#pporcentaje").value = `${currentPanel.aPpAc}%`;
 
   }
+  llenarTabla(elementTable, obj_material) {
+    getElement(elementTable).innerHTML = "";
+    obj_material.forEach((material) => {
+      if (material.activado) {
+        let image;
+        if (material.images.length !== 0) {
+          image = material.images[material.images.length - 1].src;
+        } else {
+          image =
+            "https://maxco.punkuhr.com/wp-content/plugins/woocommerce/assets/images/placeholder.png";
+        }
+        getElement(elementTable).innerHTML += `
+          <tr class="">
+                <td data-title="SKU"><b>${material.sku}</b></td>
+                <td class="text-center" data-title="">
+                  <a href="${material.permalink}" target="_blank">
+                    <img src="${image}" alt="${material.name}" class="img-fluid" height="80" width="80" min-height="80" min-width="80" loading="lazy"/>
+                  </a>
+                </td>
+                <td class="text-left" data-title="Material">${material.name}</td>
+                <td class="text-center" data-title="Detalle">${material.detalle}</td>
+                <td class="text-center" data-title="Unidad">${material.unidad}</td>
+                <td class="text-right" data-title="Cantidad">${material.cantidad}</td>
+          </tr>
+      `;
+      }
+    });
+  }
+  getFechaHoy(campo) {
+    function addZero(i) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    }
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth() + 1;
+    var yyyy = hoy.getFullYear();
+
+    dd = addZero(dd);
+    mm = addZero(mm);
+
+    let fecha = dd + "/" + mm + "/" + yyyy;
+    getElement(campo).innerHTML = fecha;
+  }
+  llenarTablas() {
+    this.llenarTabla("#tabla1 tbody", woo.materiales.filter(e => !e.accesorio && e.activado))
+    this.llenarTabla("#tabla2 tbody", woo.materiales.filter(e => e.accesorio && e.activado));
+
+  }
+  showOrHideSpinner(hide = true) {
+    if (hide) {
+      getElement("#spinner").classList.add("d-none");
+      getElement("#tabla1").classList.remove("d-none");
+      getElement("#checkboxs").classList.remove("d-none");
+    } else {
+      getElement("#spinner").classList.remove("d-none");
+    }
+  }
 }
 
 /* Observadores */
@@ -481,6 +562,7 @@ const inputCaida1A = new Observer();
 const inputCaida2B = new Observer();
 const inputCaidaL = new Observer();
 const inputSeparacionViguetas = new Observer();
+const checkboxMostrarAccesorios = new Observer();
 /* instancias generales */
 
 const woo = new WoocommerceApi();
@@ -489,9 +571,11 @@ const ui = new UI();
 
 async function init() {
   try {
-    // woo.materiales = await woo.getDatosBaseFormateados(); //guardo los datos en una propiedad
-
+    woo.materiales = await woo.getDatosBaseFormateados(); //guardo los datos en una propiedad
+    ui.showOrHideSpinner();
+    ui.llenarTablas();
   } catch (error) {
+    console.log(error);
   }
 }
 init();

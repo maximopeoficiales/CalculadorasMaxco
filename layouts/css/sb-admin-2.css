@@ -11689,3 +11689,9 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+@media (min-width: 600px) {
+  .aladerecha{
+    justify-content: flex-end !important;
+  }
+}
