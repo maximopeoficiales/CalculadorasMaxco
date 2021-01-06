@@ -14,7 +14,7 @@ author-bio.php
 comments.php
 content-none.php
 content-portfolio-slider.php
-content-portfolio.
+content-portfolio.php
 content-slider.php
 content.php
 functions.php
@@ -24,8 +24,9 @@ maintenance.php
 page.php
 portfolio.php
 screenshot.png
-searchfrom.php
+searchform.php
 selectors.js
+footer.php
 sidebar-footer.php
 sidebar.php
 single-portfolio.php

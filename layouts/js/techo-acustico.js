@@ -153,7 +153,7 @@ class WoocommerceApi {
         let myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         let raw = JSON.stringify({
-          product_id: formateado[count].id,
+          product_id: formateado[count].id.toString(),
           quantity: formateado[count].redondeo,
         });
         let requestOptions = {
@@ -162,19 +162,29 @@ class WoocommerceApi {
           body: raw,
           redirect: "follow",
         };
-        let respuesta = await fetch(
-          `${location.protocol}//${location.host}/wp-json/cocart/v1/add-item`,
-          requestOptions
-        );
-        if (respuesta.ok) {
-          console.log(respuesta.json());
-          count++;
+        try {
+          let respuesta = await fetch(
+            `${location.protocol}//${location.host}/wp-json/cocart/v1/add-item`,
+            requestOptions
+          );
+          if (respuesta.ok) {
+            respuesta = respuesta.json();
+            console.log(respuesta);
+            count++;
+          } else if (respuesta.status == 403) {
+            return false;
+          }
+        } catch (error) {
+          return false;
         }
+
       } else {
         validacion = false;
       }
     } while (validacion == true);
     return true;
+
+
   }
   async getAllMaterials(llamados = 0) {
     let materialsComplete = [],
@@ -547,6 +557,15 @@ class UI {
                     "success",
                     "Felicitaciones",
                     "Materiales agregados al carrito 😎"
+                  );
+                  setTimeout(() => {
+                    location.reload();
+                  }, 2000);
+                } else if (respuesta == false) {
+                  this.mostrarMensajeCustom(
+                    "info",
+                    "Materiales Sin Stock",
+                    "No es posible agregar al carrito"
                   );
                   setTimeout(() => {
                     location.reload();
