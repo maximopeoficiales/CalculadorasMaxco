@@ -369,7 +369,28 @@ class UI {
       }
       checkboxMostrarAccesorios.notify();
     })
+    document.addEventListener("click", (e) => {
+      if (e.target.name == "inlineRadioOptions") {
+        if (e.target.id == "OptionAcero") {
+          /* Estan con sku de prueba */
+          // selecciono Acero
+          //falta sku de  TORNILLO # 10x3/4" Recubrimiento Ruspert
+
+          this.OnOfMaterial(453878, false)
+          this.OnOfMaterial(456081)
+          this.llenarTablas();
+        } else if (e.target.id == "OptionMadera") {
+          // sku TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
+          this.OnOfMaterial(456081, false)
+          this.OnOfMaterial(453878)
+          this.llenarTablas();
+        }
+      }
+
+    })
+
   }
+
   cargarLogica() {
     inputCubiertaAgua.subscribe(() => {
       this.calcularAreaCubierta(true);
@@ -553,16 +574,121 @@ class UI {
   llenarTablas() {
     this.llenarTabla("#tabla1 tbody", woo.materiales.filter(e => !e.accesorio && e.activado))
     this.llenarTabla("#tabla2 tbody", woo.materiales.filter(e => e.accesorio && e.activado));
-
+    this.calcularMateriales();
   }
   showOrHideSpinner(hide = true) {
     if (hide) {
       getElement("#spinner").classList.add("d-none");
       getElement("#tabla1").classList.remove("d-none");
-      getElement("#checkboxs").classList.remove("d-none");
+      getElement("#botones").classList.remove("d-none");
     } else {
       getElement("#spinner").classList.remove("d-none");
     }
+  }
+  OnOfMaterial(sku = 0, activado = true) {
+    woo.materiales.forEach(e => {
+      if (e.sku == sku) {
+        e.activado = activado ? true : false;
+      }
+    })
+  }
+
+  calcularCantidadesMateriales() {
+    const E5 = getValueInput("#cubierta_agua");
+    const E6 = getValueInput("#cubiertaL");
+    const E8 = getValueInput("#caida2B");
+    const E7 = getValueInput("#caida1A");
+    const E11 = this.calcularAreaCubierta();
+    let G30 = 0; //cantidad de 452806 CUMBRERA ALZN 0.30x3.00M
+    let G23 = 0; //cantidad de 452804 CANALETA ALZN 0.30x3.00M
+    let G24 = 0; //cantidad de 453087 SUJETADOR GALV X 0.90 mm X 005/200
+    let G25 = 0; //cantidad de 453089 SOPORTE CANALETA 2A GALV2B0.90MMX005/200
+    let G30 = 0; //cantidad de 452806 CUMBRERA ALZN 0.30x3.00M
+    let G31 = 0; //cantidad de 452807 CENEFA ALZN 0.30x3.00M
+
+    woo.materiales.filter(e => {
+      if (e.activado) {
+        //calcular uno por uno material
+        switch (parseInt(e.sku)) {
+
+          /* ACCESORIOS */
+          // 452806 CUMBRERA ALZN 0.30x3.00M
+          case 452806:
+            e.cantidad = (E5 == 1) ? 0 : Math.ceil((E6 / 2.9) * 1.05);
+            G30 = e.cantidad;
+          // break;
+
+          // CENEFA ALZN 0.30x3.00M
+          case 452807:
+            if (cubiertaAgua == 1) {
+              e.cantidad = Math.ceil((E7 / 2.9) * 2 * 1.05) + Math.ceil((E6 / 2.9) * 2 * 1.05);
+            } else {
+              e.cantidad = Math.ceil(((E7 + E8) / 2.9) * 2 * 1.05)
+            }
+            G31 = e.cantidad;
+          // SUJETADOR GALV X 0.90 mm X 005/200
+          // 452804 CANALETA ALZN 0.30x3.00M
+          case 452804:
+            e.cantidad = (e5 == 1) ? Math.ceil((E6 / 2.9) * 1.05) : G30 * 2;
+            G23 = e.cantidad
+          case 453087:
+            e.cantidad = (e5 == 1) ? Math.ceil(E6 / 6) : Math.ceil(E6 / 6 * 2);
+            G24 = e.cantidad;
+          //SOPORTE CANALETA 2A GALV2B0.90MMX005/200
+          case 453089:
+            e.cantidad = G24 / 5;
+            G25 = e.cantidad;
+          //SOPORTE CANALETA 2C GALV2C0.90MMX005/200
+          case 453091:
+            e.cantidad = G25;
+          //SOPORTE SOPORTE CANALETA 2B GALV2B0.90MMX005/200
+          case 453090:
+            e.cantidad = G25;
+          // SOPORTE CANALETA 2D GALV2B0.90MMX005/200
+          case 453088:
+            e.cantidad = G25;
+          //SOPORTE CANALETA 2E GALV2B0.90MMX005/200
+          case 453092:
+            e.cantidad = G25;
+          /* FIN DE ACCESORIOS */
+
+          /* MATERIALES */
+
+          //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
+          case 452809:
+            e.cantidad = Math.ceil((E11 * 1.4652 / 100) * 1.05)
+
+          //451468 TORNILLO # 10x3/4" Recubrimiento Ruspert
+          case 451468:
+            e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+
+          //452811 TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
+          case 452811:
+            e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+          //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
+          case 452809:
+            e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+
+          //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
+          case 452809:
+            e.cantidad = Math.ceil((G30 * 24 * 1.05 / 100)) + Math.ceil((G24 * 2 * 1.05) / 100) + Math.ceil((G31 * 18 * 1.05) / 100)
+
+          //  453180 TORNILLO WAFER #8 X 3/4 PNTA BROCA GALVA
+          case 453180:
+            e.cantidad = Math.ceil((G23 * 6 * 1.05) / 100)
+          //  403863 REMACHE POP 5/32 X 12
+          case 403863:
+            e.cantidad = Math.ceil((G23 * 20 * 1.05) / 100)
+          //  402664 CINTA BUTIL 3/8
+          case 402664:
+            e.cantidad = Math.ceil(E11 * 1.1 / 14)
+          //  402657 CINTA BUTIL 7/8*
+          case 402657:
+            let E14 = dataPanel.filter(e => e.name == "p183")[0].cantTotal;
+            e.cantidad = Math.ceil(((E14 * 1.25) / 8) * 1.05);
+        }
+      }
+    })
   }
 }
 

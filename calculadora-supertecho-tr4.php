@@ -66,14 +66,7 @@ get_header("calculadora");
      <!-- INPUTS -->
      <div class="mb-4 shadow card ">
           <div class="card-body">
-               <div class="row d-flex justify-content-end">
-                    <div class="form-check d-flex align-items-center">
-                         <input class="font-weigth-bold" type="checkbox" value="" id="checkAccesorios">
-                         <label class="form-check-label" for="checkAccesorios">
-                              Mostrar Accesorios
-                         </label>
-                    </div>
-               </div>
+
                <!-- aqui van los inputs -->
                <div class="row">
                     <div class="col-md-4">
@@ -217,16 +210,29 @@ get_header("calculadora");
                          <div></div>
                     </div>
                </div>
-               <div class="row justify-content-center aladerecha d-none" id="checkboxs" >
-                    <div class="form-check form-check-inline">
-                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                         <label class="form-check-label" for="inlineRadio1">Acero</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                         <label class="form-check-label" for="inlineRadio2">Madera | Concreto</label>
+               <div id="botones" class="d-none">
+                    <div class="row d-flex justify-content-between " id="">
+                         <div class="form-check d-flex align-items-center">
+                              <input class="font-weigth-bold" type="checkbox" value="" id="checkAccesorios">
+                              <label class="form-check-label" for="checkAccesorios">
+                                   Mostrar Accesorios
+                              </label>
+                         </div>
+                         <div>
+                              <div class="form-check form-check-inline">
+                                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="OptionAcero" value="option1" checked>
+                                   <label class="form-check-label" for="inlineRadio1">Acero</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="OptionMadera" value="option2">
+                                   <label class="form-check-label" for="inlineRadio2">Madera | Concreto</label>
+                              </div>
+                         </div>
                     </div>
                </div>
+
+
+
 
                <div class="p-2 table-responsive-vertical shadow-z-1 ">
                     <table class="table table-hover table-mc-light-blue d-none" id="tabla1" width="100%" cellspacing="0">
