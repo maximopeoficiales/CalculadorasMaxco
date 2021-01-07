@@ -400,8 +400,8 @@ class UI {
           this.OnOfMaterial(456081, false)
           this.OnOfMaterial(453878)
         }
+        this.calculoTotal();
       }
-      this.calculoTotal();
     })
 
     getElement("#calcularPrecios").addEventListener("click", (e) => {
