@@ -254,7 +254,7 @@ class WoocommerceApi {
         myHeaders.append("Content-Type", "application/json");
         let raw = JSON.stringify({
           product_id: formateado[count].id.toString(),
-          quantity: formateado[count].redondeo,
+          quantity: formateado[count].cantidad,
         });
         let requestOptions = {
           method: "POST",
@@ -326,6 +326,23 @@ class UI {
   getValueInput(element) {
     return getElement(element).value;
   }
+  mostrarSpinner() {
+    getElement("#spinner").classList.remove("d-none");
+    getElement("#contenido-tabla").classList.add("d-none");
+    getElement("#botones").classList.add("d-none");
+  }
+  ocultarSpinner() {
+    getElement("#spinner").classList.add("d-none");
+    getElement("#contenido-tabla").classList.remove("d-none");
+    getElement("#botones").classList.remove("d-none");
+  }
+  async resetMateriales() {
+    this.mostrarSpinner();
+    let materiales = await woo.getDatosBaseFormateados(); //obtengo los datos de nuevo
+    woo.materiales = materiales.slice(); //copio lo obtenido y lo guardo
+    this.ocultarSpinner();
+    this.calculoTotal();
+  }
   cargarEventListeners() {
     getElement("#cubierta_agua").addEventListener("change", (e) => {
       inputCubiertaAgua.notify();
@@ -349,7 +366,7 @@ class UI {
       inputSeparacionViguetas.notify();
     })
     getElement("#panel").addEventListener("change", () => {
-      this.calcularOpcionesPanel();
+      this.calculoTotal();
     })
     getElement("#checkAccesorios").addEventListener("change", (e) => {
       if (e.target.checked) {
@@ -378,43 +395,135 @@ class UI {
 
           this.OnOfMaterial(453878, false)
           this.OnOfMaterial(456081)
-          this.llenarTablas();
         } else if (e.target.id == "OptionMadera") {
           // sku TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
           this.OnOfMaterial(456081, false)
           this.OnOfMaterial(453878)
-          this.llenarTablas();
         }
       }
-
+      this.calculoTotal();
     })
 
+    getElement("#calcularPrecios").addEventListener("click", (e) => {
+      //cualquier evento hace un calculo total
+      inputCaida1A.notify();
+    })
+    /* resetear materiales */
+    getElement("#limpiarTablas").addEventListener("click", (e) => {
+      e.preventDefault();
+      this.mostrarConfirmacionCustom(
+        "Advertencia",
+        "¿Esta seguro de resetear los materiales?",
+        "warning",
+        "Resetear",
+        () => {
+          this.resetMateriales();
+        }
+      );
+    });
+    //agregar al carrito
+    getElement("#agregarAlCarrito")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        if (this.getPrecioTotalMateriales() != 0) {
+          let html = `
+              <div class="text-center my-2" id="spinner_combo">
+                  <p>Agregando Materiales ...</p>
+                  <div class="lds-roller">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                  </div>
+              </div>
+              `;
+          this.mostrarConfirmacionCustom(
+            "Estas seguro de agregar al carrito",
+            "",
+            "warning",
+            "Agregar al carrito",
+            () => {
+              this.mostrarConfirmacionHtml(
+                {
+                  html,
+                },
+                null
+              );
+              (async () => {
+                document
+                  .querySelectorAll(".swal2-styled")[0]
+                  .classList.add("d-none");
+                document
+                  .querySelectorAll(".swal2-styled")[1]
+                  .classList.add("d-none");
+                let respuesta = await woo.agregarCarrito();
+                if (respuesta) {
+                  this.mostrarMensajeCustom(
+                    "success",
+                    "Felicitaciones",
+                    "Materiales agregados al carrito 😎"
+                  );
+                  setTimeout(() => {
+                    location.reload();
+                  }, 2000);
+                } else if (respuesta == false) {
+                  this.mostrarMensajeCustom(
+                    "info",
+                    "Materiales Sin Stock",
+                    "No es posible agregar al carrito"
+                  );
+                  setTimeout(() => {
+                    location.reload();
+                  }, 2000);
+                }
+              })();
+            }
+          );
+        } else {
+          this.mostrarMensajeCustom("info", "Ops ...", "Precio total en cero");
+        }
+      });
   }
 
   cargarLogica() {
     inputCubiertaAgua.subscribe(() => {
-      this.calcularAreaCubierta(true);
-      this.calcularOpcionesPanel();
+      this.calculoTotal();
     });
     inputCaida1A.subscribe(() => {
-      this.calcularAreaCubierta(true);
-      this.calcularOpcionesPanel();
+      this.calculoTotal();
     });
     inputCaida2B.subscribe(() => {
-      this.calcularAreaCubierta(true);
-      this.calcularOpcionesPanel();
+      this.calculoTotal();
     });
     inputCaidaL.subscribe(() => {
-      this.calcularAreaCubierta(true);
-      this.calcularOpcionesPanel();
+      this.calculoTotal();
     });
     inputSeparacionViguetas.subscribe(() => {
-      this.calcularAreaCubierta(true);
-      this.calcularOpcionesPanel();
+      this.calculoTotal();
     });
     checkboxMostrarAccesorios.subscribe(() => {
       this.llenarTablas();
     });
+
+
+  }
+  calculoTotal() {
+    this.mostrarSpinner();
+    this.calcularAreaCubierta(true);
+    this.calcularOpcionesPanel();
+    this.calcularCantidadesMateriales();
+    this.llenarTablas();
+
+    getElement("#cantidad_total").innerText = this.getCantidadTotalMateriales();
+    getElement("#precio_total").innerText = `$ ${this.getPrecioTotalMateriales()}`;
+
+    setTimeout(() => {
+      this.ocultarSpinner();
+    }, 1000);
 
   }
   calcularAreaCubierta(applyInput = false) {
@@ -514,7 +623,7 @@ class UI {
     });
 
     this.getDataPanelSelected();
-    console.log(dataPanel);
+    // console.log(dataPanel);
   }
   getDataPanelSelected() {
     function getPanelByName(namePanel) {
@@ -574,7 +683,6 @@ class UI {
   llenarTablas() {
     this.llenarTabla("#tabla1 tbody", woo.materiales.filter(e => !e.accesorio && e.activado))
     this.llenarTabla("#tabla2 tbody", woo.materiales.filter(e => e.accesorio && e.activado));
-    this.calcularMateriales();
   }
   showOrHideSpinner(hide = true) {
     if (hide) {
@@ -594,102 +702,186 @@ class UI {
   }
 
   calcularCantidadesMateriales() {
-    const E5 = getValueInput("#cubierta_agua");
-    const E6 = getValueInput("#cubiertaL");
-    const E8 = getValueInput("#caida2B");
-    const E7 = getValueInput("#caida1A");
+    const E5 = this.getValueInput("#cubierta_agua");
+    const E6 = this.getValueInput("#cubiertaL");
+    const E8 = this.getValueInput("#caida2B");
+    const E7 = this.getValueInput("#caida1A");
     const E11 = this.calcularAreaCubierta();
     let G30 = 0; //cantidad de 452806 CUMBRERA ALZN 0.30x3.00M
     let G23 = 0; //cantidad de 452804 CANALETA ALZN 0.30x3.00M
     let G24 = 0; //cantidad de 453087 SUJETADOR GALV X 0.90 mm X 005/200
     let G25 = 0; //cantidad de 453089 SOPORTE CANALETA 2A GALV2B0.90MMX005/200
-    let G30 = 0; //cantidad de 452806 CUMBRERA ALZN 0.30x3.00M
+    // let G30 = 0; //cantidad de 452806 CUMBRERA ALZN 0.30x3.00M
     let G31 = 0; //cantidad de 452807 CENEFA ALZN 0.30x3.00M
 
     woo.materiales.filter(e => {
       if (e.activado) {
         //calcular uno por uno material
-        switch (parseInt(e.sku)) {
+        let sku = parseInt(e.sku);
 
-          /* ACCESORIOS */
-          // 452806 CUMBRERA ALZN 0.30x3.00M
-          case 452806:
-            e.cantidad = (E5 == 1) ? 0 : Math.ceil((E6 / 2.9) * 1.05);
-            G30 = e.cantidad;
-          // break;
+        /* ACCESORIOS */
+        // 452806 CUMBRERA ALZN 0.30x3.00M
+        if (sku == 452804) {
+          e.cantidad = (E5 == 1) ? 0 : Math.ceil((E6 / 2.9) * 1.05);
+          G30 = e.cantidad;
+        }
 
-          // CENEFA ALZN 0.30x3.00M
-          case 452807:
-            if (cubiertaAgua == 1) {
-              e.cantidad = Math.ceil((E7 / 2.9) * 2 * 1.05) + Math.ceil((E6 / 2.9) * 2 * 1.05);
-            } else {
-              e.cantidad = Math.ceil(((E7 + E8) / 2.9) * 2 * 1.05)
-            }
-            G31 = e.cantidad;
-          // SUJETADOR GALV X 0.90 mm X 005/200
-          // 452804 CANALETA ALZN 0.30x3.00M
-          case 452804:
-            e.cantidad = (e5 == 1) ? Math.ceil((E6 / 2.9) * 1.05) : G30 * 2;
-            G23 = e.cantidad
-          case 453087:
-            e.cantidad = (e5 == 1) ? Math.ceil(E6 / 6) : Math.ceil(E6 / 6 * 2);
-            G24 = e.cantidad;
-          //SOPORTE CANALETA 2A GALV2B0.90MMX005/200
-          case 453089:
-            e.cantidad = G24 / 5;
-            G25 = e.cantidad;
-          //SOPORTE CANALETA 2C GALV2C0.90MMX005/200
-          case 453091:
-            e.cantidad = G25;
-          //SOPORTE SOPORTE CANALETA 2B GALV2B0.90MMX005/200
-          case 453090:
-            e.cantidad = G25;
-          // SOPORTE CANALETA 2D GALV2B0.90MMX005/200
-          case 453088:
-            e.cantidad = G25;
-          //SOPORTE CANALETA 2E GALV2B0.90MMX005/200
-          case 453092:
-            e.cantidad = G25;
-          /* FIN DE ACCESORIOS */
+        // CENEFA ALZN 0.30x3.00M
+        if (sku == 452807) {
+          if (E5 == 1) {
+            e.cantidad = Math.ceil((E7 / 2.9) * 2 * 1.05) + Math.ceil((E6 / 2.9) * 2 * 1.05);
+          } else {
+            e.cantidad = Math.ceil(((E7 + E8) / 2.9) * 2 * 1.05)
+          }
+          G31 = e.cantidad;
+        }
+        // SUJETADOR GALV X 0.90 mm X 005/200
+        // 452804 CANALETA ALZN 0.30x3.00M
+        if (sku == 452804) {
+          e.cantidad = (E5 == 1) ? Math.ceil((E6 / 2.9) * 1.05) : G30 * 2;
+          G23 = e.cantidad
+        }
+        if (sku == 453087) {
+          e.cantidad = (E5 == 1) ? Math.ceil(E6 / 6) : Math.ceil(E6 / 6 * 2);
+          G24 = e.cantidad;
+        }
+        //SOPORTE CANALETA 2A GALV2B0.90MMX005/200
+        if (sku == 453089) {
+          e.cantidad = G24 / 5;
+          G25 = e.cantidad;
+        }
 
-          /* MATERIALES */
+        //SOPORTE CANALETA 2C GALV2C0.90MMX005/200
+        //SOPORTE SOPORTE CANALETA 2B GALV2B0.90MMX005/200
+        // SOPORTE CANALETA 2D GALV2B0.90MMX005/200
+        //SOPORTE CANALETA 2E GALV2B0.90MMX005/200
+        if (sku == 453091 || sku == 453090 || sku == 453088 || sku == 453092) {
+          e.cantidad = G25;
+        }
 
-          //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
-          case 452809:
-            e.cantidad = Math.ceil((E11 * 1.4652 / 100) * 1.05)
+        /* FIN DE ACCESORIOS */
 
-          //451468 TORNILLO # 10x3/4" Recubrimiento Ruspert
-          case 451468:
-            e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+        /* MATERIALES */
 
-          //452811 TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
-          case 452811:
-            e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
-          //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
-          case 452809:
-            e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+        //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
+        if (sku == 452809) {
+          e.cantidad = Math.ceil((E11 * 1.4652 / 100) * 1.05)
 
-          //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
-          case 452809:
-            e.cantidad = Math.ceil((G30 * 24 * 1.05 / 100)) + Math.ceil((G24 * 2 * 1.05) / 100) + Math.ceil((G31 * 18 * 1.05) / 100)
+        }
 
-          //  453180 TORNILLO WAFER #8 X 3/4 PNTA BROCA GALVA
-          case 453180:
-            e.cantidad = Math.ceil((G23 * 6 * 1.05) / 100)
-          //  403863 REMACHE POP 5/32 X 12
-          case 403863:
-            e.cantidad = Math.ceil((G23 * 20 * 1.05) / 100)
-          //  402664 CINTA BUTIL 3/8
-          case 402664:
-            e.cantidad = Math.ceil(E11 * 1.1 / 14)
-          //  402657 CINTA BUTIL 7/8*
-          case 402657:
-            let E14 = dataPanel.filter(e => e.name == "p183")[0].cantTotal;
-            e.cantidad = Math.ceil(((E14 * 1.25) / 8) * 1.05);
+        //451468 TORNILLO # 10x3/4" Recubrimiento Ruspert
+        if (sku == 451468) {
+
+          e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+        }
+
+        //452811 TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
+        if (sku == 452811) {
+
+          e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+        }
+        //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
+        if (sku == 452809) {
+
+          e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+        }
+
+        //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
+        if (sku == 452809) {
+          e.cantidad = Math.ceil((G30 * 24 * 1.05 / 100)) + Math.ceil((G24 * 2 * 1.05) / 100) + Math.ceil((G31 * 18 * 1.05) / 100)
+
+        }
+
+        //  453180 TORNILLO WAFER #8 X 3/4 PNTA BROCA GALVA
+        if (sku == 456081) {
+
+          e.cantidad = Math.ceil((G23 * 6 * 1.05) / 100)
+        }
+        //  403863 REMACHE POP 5/32 X 12
+        if (sku == 453878) {
+
+          e.cantidad = Math.ceil((G23 * 20 * 1.05) / 100)
+        }
+
+        //  402664 CINTA BUTIL 3/8
+        if (sku == 402664) {
+
+          e.cantidad = Math.ceil(E11 * 1.1 / 14)
+        }
+        //  402657 CINTA BUTIL 7/8*
+        if (sku == 453877) {
+          // console.log("si existo");
+          let E14 = dataPanel.filter(e => e.name == "p183")[0].cantTotal;
+          e.cantidad = Math.ceil(((E14 * 1.25) / 8) * 1.05);
         }
       }
     })
   }
+  getCantidadTotalMateriales() {
+    let acumulador2 = 0,
+      total = woo.materiales.reduce((acumulador, m) => {
+        if (m.activado) {
+          acumulador2 = acumulador + m.cantidad;
+        }
+        return acumulador2;
+      }, 0);
+    return total;
+  }
+  getPrecioTotalMateriales() {
+    let acumulador2 = 0,
+      total = woo.materiales.reduce((acumulador, m) => {
+        /* falta cambiar al sale_price */
+        if (m.activado) {
+          let precio = m.price == "" ? 0 : parseFloat(m.price);
+          acumulador2 =
+            parseFloat(acumulador) + parseFloat(m.cantidad) * precio;
+        }
+        return parseFloat(acumulador2);
+      }, 0);
+    return parseFloat(acumulador2).toFixed(2);
+  }
+
+  mostrarMensajeCustom(icon, title, text) {
+    Swal.fire({
+      icon,
+      title,
+      text,
+      allowOutsideClick: false,
+    });
+  }
+  mostrarConfirmacionCustom(title, text, icon, confirmButtonText, callback) {
+    Swal.fire({
+      title,
+      text,
+      icon,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText,
+      cancelButtonText: "Cancelar",
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.value) callback();
+    });
+  }
+  mostrarConfirmacionHtml(
+    { title, html, confirmButtonText, cancelButtonText },
+    callback
+  ) {
+    Swal.fire({
+      title,
+      html,
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText,
+      cancelButtonText,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.value) callback();
+    });
+  }
+
 }
 
 /* Observadores */

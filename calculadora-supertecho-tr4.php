@@ -179,10 +179,10 @@ get_header("calculadora");
                     <button class="btn btn-success " type="button" id="limpiarTablas">
                          <i class="mr-2 fas fa-sync-alt fa-spin fa-fw"></i> Limpiar
                     </button>
-                    <button class="btn btn-primary " type="button" id="limpiarTablas">
+                    <button class="btn btn-primary " type="button" id="calcularPrecios">
                          <i class="fas fa-calculator fa-fw"></i> Calcular
                     </button>
-                    <button class="btn btn-info " type="button" id="limpiarTablas">
+                    <button class="btn btn-info " type="button" id="agregarAlCarrito">
                          <i class="mr-2 fas fa-shopping-cart fa-fw"></i> Agregar al Carrito
                     </button>
                </div>
@@ -234,7 +234,7 @@ get_header("calculadora");
 
 
 
-               <div class="p-2 table-responsive-vertical shadow-z-1 ">
+               <div class="p-2 table-responsive-vertical shadow-z-1 " id="contenido-tabla">
                     <table class="table table-hover table-mc-light-blue d-none" id="tabla1" width="100%" cellspacing="0">
                          <thead>
                               <tr>
