@@ -87,13 +87,13 @@ get_header("calculadora");
                                              </button>
                                         </div>
                                         <div class="modal-body">
-                                             <div class="row text-center">
+                                             <div class="text-center row">
                                                   <div class="col-md-6">
-                                                       <div class="text-center mb-3">Cubierta de 2 Aguas</div>
+                                                       <div class="mb-3 text-center">Cubierta de 2 Aguas</div>
                                                        <img src="<?php echo get_template_directory_uri(); ?>/layouts/img/cubiertas/2.jpg" alt="" class="img-fluid">
                                                   </div>
                                                   <div class="col-md-6">
-                                                       <div class="text-center mb-3">Cubierta de 1 Agua</div>
+                                                       <div class="mb-3 text-center">Cubierta de 1 Agua</div>
                                                        <img src="<?php echo get_template_directory_uri(); ?>/layouts/img/cubiertas/1.jpg" alt="" class="img-fluid">
                                                   </div>
                                              </div>
@@ -175,18 +175,18 @@ get_header("calculadora");
 
                </div>
 
-               <div class="row  ">
-                    <div class="col-md-4 text-center my-2">
+               <div class="row ">
+                    <div class="my-2 text-center col-md-4">
                          <button class="btn btn-success " type="button" id="limpiarTablas">
                               <i class="mr-2 fas fa-sync-alt fa-spin fa-fw"></i> Limpiar
                          </button>
                     </div>
-                    <div class="col-md-4 text-center my-2">
+                    <div class="my-2 text-center col-md-4">
                          <button class="btn btn-primary " type="button" id="calcularPrecios">
                               <i class="fas fa-calculator fa-fw"></i> Calcular
                          </button>
                     </div>
-                    <div class="col-md-4 text-center my-2">
+                    <div class="my-2 text-center col-md-4">
                          <button class="btn btn-info " type="button" id="agregarAlCarrito">
                               <i class="mr-2 fas fa-shopping-cart fa-fw"></i> Agregar al Carrito
                          </button>
@@ -221,13 +221,13 @@ get_header("calculadora");
                <div id="botones" class="d-none">
                     <div class="row justify-content-center" id="">
 
-                         <div class="form-check d-flex align-items-center my-2 mx-4">
+                         <div class="mx-4 my-2 form-check d-flex align-items-center">
                               <input class="font-weigth-bold" type="checkbox" value="" id="checkAccesorios">
                               <label class="form-check-label" for="checkAccesorios">
                                    Mostrar Accesorios
                               </label>
                          </div>
-                         <div class="my-2 mx-4">
+                         <div class="mx-4 my-2">
                               <div class="form-check form-check-inline">
                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="OptionAcero" value="option1" checked>
                                    <label class="form-check-label" for="inlineRadio1">Acero</label>
