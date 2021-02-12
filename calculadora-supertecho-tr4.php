@@ -229,7 +229,7 @@ get_header("calculadora");
                          </div>
                          <div class="mx-4 my-2">
                               <div class="form-check form-check-inline">
-                                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="OptionAcero" value="option1" checked>
+                                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="OptionAcero" value="option1">
                                    <label class="form-check-label" for="inlineRadio1">Acero</label>
                               </div>
                               <div class="form-check form-check-inline">

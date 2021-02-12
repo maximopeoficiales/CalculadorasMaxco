@@ -87,14 +87,14 @@ get_header("calculadora");
                                              </button>
                                         </div>
                                         <div class="modal-body">
-                                             <div class="row text-center">
+                                             <div class="text-center row">
                                                   <div class="col-md-6">
-                                                       <div class="text-center mb-3">Cubierta de 2 Aguas</div>
-                                                       <img src="<?php echo get_template_directory_uri(); ?>/layouts/img/cubiertas/2.jpg" alt="" class="img-fluid">
+                                                       <div class="mb-3 text-center">Cubierta de 2 Aguas</div>
+                                                       <img src="<?php echo get_template_directory_uri(); ?>/layouts/img/cubiertas/c2ag-confort.png" alt="" class="img-fluid">
                                                   </div>
                                                   <div class="col-md-6">
-                                                       <div class="text-center mb-3">Cubierta de 1 Agua</div>
-                                                       <img src="<?php echo get_template_directory_uri(); ?>/layouts/img/cubiertas/1.jpg" alt="" class="img-fluid">
+                                                       <div class="mb-3 text-center">Cubierta de 1 Agua</div>
+                                                       <img src="<?php echo get_template_directory_uri(); ?>/layouts/img/cubiertas/c1a-confort.png" alt="" class="img-fluid">
                                                   </div>
                                              </div>
                                         </div>
@@ -132,6 +132,7 @@ get_header("calculadora");
                                    <option value="1.5">1.5</option>
                                    <option value="1.75">1.75</option>
                                    <option value="2">2</option>
+                                   <option value="2.5">2.5</option>
                               </select>
                          </div>
                     </div>
@@ -149,13 +150,13 @@ get_header("calculadora");
                          <div class="form-group">
                               <label for="">Seleccione su Panel :</label>
                               <select class="form-control" id="panel">
-                                   <option value="p183" selected>Panel Supertecho TR-4 XG x 1.05m x 1.83 m</option>
-                                   <option value="p305">Panel Supertecho TR-4 XG x 1.05m x 3.05 m</option>
-                                   <option value="p366">Panel Supertecho TR-4 XG x 1.05m x 3.66 m
+                                   <option value="p305" selected>PANEL TCA POL 38X1025X3.05 ALZN/FOIL*
                                    </option>
-                                   <option value="p515">Panel Supertecho TR-4 XG x 1.05m x 5.15 m
+                                   <option value="p366">PANEL TCA POL 38X1025X3.66 ALZN/FOIL*
                                    </option>
-                                   <option value="p600">Panel Supertecho TR-4 XG x 1.05m x 6.00 m
+                                   <option value="p515">PANEL TCA POL 38X1025X5.15 ALZN/FOIL*
+                                   </option>
+                                   <option value="p600">PANEL TCA POL 38X1025X6.00 ALZN/FOIL*
                                    </option>
                               </select>
                          </div>
@@ -220,7 +221,7 @@ get_header("calculadora");
                          </div>
                          <div>
                               <div class="form-check form-check-inline">
-                                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="OptionAcero" value="option1" checked>
+                                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="OptionAcero" value="option1">
                                    <label class="form-check-label" for="inlineRadio1">Acero</label>
                               </div>
                               <div class="form-check form-check-inline">

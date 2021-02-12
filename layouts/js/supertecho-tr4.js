@@ -393,12 +393,12 @@ class UI {
           // selecciono Acero
           //falta sku de  TORNILLO # 10x3/4" Recubrimiento Ruspert
 
-          this.OnOfMaterial(453878, false)
+          // this.OnOfMaterial(453878, false) iria sku de ruspest
           this.OnOfMaterial(456081)
         } else if (e.target.id == "OptionMadera") {
           // sku TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
           this.OnOfMaterial(456081, false)
-          this.OnOfMaterial(453878)
+          // this.OnOfMaterial(453878) iria ruspert
         }
         this.calculoTotal();
       }
@@ -572,6 +572,8 @@ class UI {
         panel.cantA = Math.ceil(parseFloat
           (caida1A / panel.values[5])) == Infinity ? 0 : Math.ceil(parseFloat
             (caida1A / panel.values[5]));
+      } else {
+        panel.cantA = 0;
       }
 
       if (cubiertaAgua == 2) {
@@ -606,16 +608,16 @@ class UI {
           panel.areaPanel = (panel.cantTotal * 1.05 * 1.83).toFixed(2);
           break;
         case "p305":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 3.05).toFixed(2);;
+          panel.areaPanel = (panel.cantTotal * 1.05 * 3.05).toFixed(2);
           break;
         case "p366":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 3.66).toFixed(2);;
+          panel.areaPanel = (panel.cantTotal * 1.05 * 3.66).toFixed(2);
           break;
         case "p515":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 5.15).toFixed(2);;
+          panel.areaPanel = (panel.cantTotal * 1.05 * 5.15).toFixed(2);
           break;
         case "p600":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 6).toFixed(2);;
+          panel.areaPanel = (panel.cantTotal * 1.05 * 6).toFixed(2);
           break;
       }
       panel.aPpAc = Math.round((parseFloat(panel.areaPanel) / areaCubierta) * 100);
@@ -742,7 +744,7 @@ class UI {
           G23 = e.cantidad
         }
         if (sku == 453087) {
-          e.cantidad = (E5 == 1) ? Math.ceil(E6 / 6) : Math.ceil(E6 / 6 * 2);
+          e.cantidad = (E5 == 1) ? Math.ceil(E6 / 6) : Math.ceil(E6 / 6 * 2) * 5;
           G24 = e.cantidad;
         }
         //SOPORTE CANALETA 2A GALV2B0.90MMX005/200
@@ -797,8 +799,8 @@ class UI {
 
           e.cantidad = Math.ceil((G23 * 6 * 1.05) / 100)
         }
-        //  403863 REMACHE POP 5/32 X 12
-        if (sku == 453878) {
+        //  456081 REMACHE POP 5/32 X 12
+        if (sku == 456081) {
 
           e.cantidad = Math.ceil((G23 * 20 * 1.05) / 100)
         }

@@ -9,22 +9,13 @@ const getElement = (selector) => document.querySelector(selector);
 
 let dataPanel = [
   {
-    name: "p183",
-    cantA: 0,
-    cantB: 0,
-    cantTotal: 0,
-    areaPanel: 0,
-    aPpAc: 0,
-    values: [1.5, 1, 1.25, 1.5, 0, 0]
-  },
-  {
     name: "p305",
     cantA: 0,
     cantB: 0,
     cantTotal: 0,
     areaPanel: 0,
     aPpAc: 0,
-    values: [2.25, 2, 2.5, 1.5, 1.75, 2]
+    values: [2.25, 2, 2.5, 1.5, 1.75, 2.25, 2.5]
   },
   {
     name: "p366",
@@ -33,7 +24,7 @@ let dataPanel = [
     cantTotal: 0,
     areaPanel: 0,
     aPpAc: 0,
-    values: [3, 3, 2.5, 3, 3.5, 2]
+    values: [3, 3, 2.5, 3, 3.5, 2.25, 2.5]
   },
   {
     name: "p515",
@@ -42,7 +33,7 @@ let dataPanel = [
     cantTotal: 0,
     areaPanel: 0,
     aPpAc: 0,
-    values: [4.5, 5, 5, 4.5, 3.5, 4]
+    values: [4.5, 5, 5, 4.5, 3.5, 4.5, 5]
   },
   {
     name: "p600",
@@ -51,7 +42,7 @@ let dataPanel = [
     cantTotal: 0,
     areaPanel: 0,
     aPpAc: 0,
-    values: [5.25, 5, 5, 4.5, 5.25, 4]
+    values: [5.25, 5, 5, 4.5, 5.25, 4.5, 5]
   },
 ];
 class Observer {
@@ -152,14 +143,15 @@ class WoocommerceApi {
       //   unidad: "Cto",
       //   detalle: "", accesorio: false,
       //   activado: true,
-      // }, {
-      //   sku: 449071,
-      //   nombre: "TORNILLO # 10x3/4 Recubrimiento Ruspert",
-      //   cantidad: 0,
-      //   unidad: "Cto",
-      //   detalle: "", accesorio: false,
-      //   activado: true,
       // },
+      {
+        sku: 456078,
+        nombre: "TORNILLO 14X5 P. BROCA CON ARANDELA DG",
+        cantidad: 0,
+        unidad: "Cto",
+        detalle: "", accesorio: false,
+        activado: true,
+      },
       // {
       //   sku: 449071,
       //   nombre: "TORNILLO TAPPER 1/4 X 3 3 / 4 RUSPERT",
@@ -175,7 +167,8 @@ class WoocommerceApi {
       //   unidad: "Cto",
       //   detalle: "", accesorio: false,
       //   activado: true,
-      // },
+      // }
+      // ,
       // {
       //   sku: 449071,
       //   nombre: "TORNILLO WAFER #8 X 3/4 PNTA BROCA GALVA",
@@ -183,7 +176,27 @@ class WoocommerceApi {
       //   unidad: "Cto",
       //   detalle: "", accesorio: false,
       //   activado: true,
-      // },
+      // }
+      // ,
+
+      // {
+      //   sku: 449071,
+      //   nombre: "PERFIL PEG. CLIP TR5 X 0.8 005/200",
+      //   cantidad: 0,
+      //   unidad: "und",
+      //   detalle: "", accesorio: false,
+      //   activado: true,
+      // }
+      // ,
+      {
+        sku: 402660,
+        nombre: "CINTA SELLADORA P/FOIL ANTIHUMEDAD",
+        cantidad: 0,
+        unidad: "Rollos",
+        detalle: "", accesorio: false,
+        activado: true,
+      }
+      ,
       {
         sku: 456081,
         nombre: "REMACHE POP 5/32 X 12",
@@ -391,14 +404,16 @@ class UI {
         if (e.target.id == "OptionAcero") {
           /* Estan con sku de prueba */
           // selecciono Acero
-          //falta sku de  TORNILLO # 10x3/4" Recubrimiento Ruspert
+          //456078  TORNILLO 14X5 P. BROCA CON ARANDELA DG se desactiva
+          // TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
 
-          this.OnOfMaterial(453878, false)
+
+          this.OnOfMaterial(456078, false)
           this.OnOfMaterial(456081)
         } else if (e.target.id == "OptionMadera") {
           // sku TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
           this.OnOfMaterial(456081, false)
-          this.OnOfMaterial(453878)
+          this.OnOfMaterial(456078)
         }
         this.calculoTotal();
       }
@@ -550,7 +565,7 @@ class UI {
     let areaCubierta = this.calcularAreaCubierta();
 
     dataPanel = dataPanel.filter(panel => {
-
+      // validacion para cantA
       if (separacionViquetas == 0.75) {
         panel.cantA = Math.ceil(parseFloat
           (caida1A / panel.values[0]));
@@ -572,6 +587,13 @@ class UI {
         panel.cantA = Math.ceil(parseFloat
           (caida1A / panel.values[5])) == Infinity ? 0 : Math.ceil(parseFloat
             (caida1A / panel.values[5]));
+      }
+      else if (separacionViquetas == 2.5) {
+        panel.cantA = Math.ceil(parseFloat
+          (caida1A / panel.values[6])) == Infinity ? 0 : Math.ceil(parseFloat
+            (caida1A / panel.values[6]));
+      } else {
+        panel.cantA = 0;
       }
 
       if (cubiertaAgua == 2) {
@@ -596,26 +618,28 @@ class UI {
           panel.cantB = Math.ceil(parseFloat
             (caida2B / panel.values[5])) == Infinity ? 0 : Math.ceil(parseFloat
               (caida2B / panel.values[5]));
+        } else if (separacionViquetas == 2.5) {
+          panel.cantB = Math.ceil(parseFloat
+            (caida2B / panel.values[6])) == Infinity ? 0 : Math.ceil(parseFloat
+              (caida2B / panel.values[6]));
         }
+
       } else {
         panel.cantB = 0;
       }
       panel.cantTotal = Math.ceil(cubiertaL / 1.05) * (panel.cantA + panel.cantB)
       switch (panel.name) {
-        case "p183":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 1.83).toFixed(2);
-          break;
         case "p305":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 3.05).toFixed(2);;
+          panel.areaPanel = (panel.cantTotal * 1.025 * 3.05).toFixed(2);
           break;
         case "p366":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 3.66).toFixed(2);;
+          panel.areaPanel = (panel.cantTotal * 1.025 * 3.66).toFixed(2);
           break;
         case "p515":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 5.15).toFixed(2);;
+          panel.areaPanel = (panel.cantTotal * 1.025 * 5.15).toFixed(2);
           break;
         case "p600":
-          panel.areaPanel = (panel.cantTotal * 1.05 * 6).toFixed(2);;
+          panel.areaPanel = (panel.cantTotal * 1.025 * 6).toFixed(2);
           break;
       }
       panel.aPpAc = Math.round((parseFloat(panel.areaPanel) / areaCubierta) * 100);
@@ -711,6 +735,7 @@ class UI {
     let G23 = 0; //cantidad de 452804 CANALETA ALZN 0.30x3.00M
     let G24 = 0; //cantidad de 453087 SUJETADOR GALV X 0.90 mm X 005/200
     let G25 = 0; //cantidad de 453089 SOPORTE CANALETA 2A GALV2B0.90MMX005/200
+    let G28 = 0; //cantidad de 456078 TORNILLO 14X5 P. BROCA CON ARANDELA DG
     // let G30 = 0; //cantidad de 452806 CUMBRERA ALZN 0.30x3.00M
     let G31 = 0; //cantidad de 452807 CENEFA ALZN 0.30x3.00M
 
@@ -718,7 +743,6 @@ class UI {
       if (e.activado) {
         //calcular uno por uno material
         let sku = parseInt(e.sku);
-
         /* ACCESORIOS */
         // 452806 CUMBRERA ALZN 0.30x3.00M
         if (sku == 452804) {
@@ -742,7 +766,7 @@ class UI {
           G23 = e.cantidad
         }
         if (sku == 453087) {
-          e.cantidad = (E5 == 1) ? Math.ceil(E6 / 6) : Math.ceil(E6 / 6 * 2);
+          e.cantidad = (E5 == 1) ? Math.ceil(E6 / 6) : Math.ceil(E6 / 6 * 2) * 5;
           G24 = e.cantidad;
         }
         //SOPORTE CANALETA 2A GALV2B0.90MMX005/200
@@ -768,13 +792,16 @@ class UI {
           e.cantidad = Math.ceil((E11 * 1.4652 / 100) * 1.05)
 
         }
-
-        //451468 TORNILLO # 10x3/4" Recubrimiento Ruspert
-        if (sku == 451468) {
-
-          e.cantidad = Math.ceil((E11 * 4.57 / 100) * 1.05)
+        // este es la diferencia con supertecho tr4 
+        //456078 TORNILLO 14X5 P. BROCA CON ARANDELA DG
+        if (sku == 456078) {
+          G28 = Math.ceil((E11 * 4.57 / 100) * 1.05);
+          e.cantidad = G28;
         }
-
+        // no existe este sku PERFIL PEG. CLIP TR5 X 0.8 005/200
+        if (sku == 429983) {
+          e.cantidad = G28 * 100;
+        }
         //452811 TORNILLO TAPPER 1/4" X 3 3/4" RUSPERT
         if (sku == 452811) {
 
@@ -789,7 +816,6 @@ class UI {
         //452809 TORNILLO1/4X7/8PNTA BROCA STITCH RUSPERT
         if (sku == 452809) {
           e.cantidad = Math.ceil((G30 * 24 * 1.05 / 100)) + Math.ceil((G24 * 2 * 1.05) / 100) + Math.ceil((G31 * 18 * 1.05) / 100)
-
         }
 
         //  453180 TORNILLO WAFER #8 X 3/4 PNTA BROCA GALVA
@@ -811,8 +837,12 @@ class UI {
         //  402657 CINTA BUTIL 7/8*
         if (sku == 453877) {
           // console.log("si existo");
-          let E14 = dataPanel.filter(e => e.name == "p183")[0].cantTotal;
+          let E14 = dataPanel.filter(e => e.name == "p305")[0].cantTotal;
           e.cantidad = Math.ceil(((E14 * 1.25) / 8) * 1.05);
+        }
+        // 402660 CINTA SELLADORA P/FOIL ANTIHUMEDAD
+        if (sku == 402660) {
+          e.cantidad = Math.ceil(((E11 * 1.1) / 45));
         }
       }
     })
@@ -900,6 +930,7 @@ const ui = new UI();
 async function init() {
   try {
     woo.materiales = await woo.getDatosBaseFormateados(); //guardo los datos en una propiedad
+    // console.log(woo.materiales);
     ui.showOrHideSpinner();
     ui.llenarTablas();
   } catch (error) {
